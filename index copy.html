@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="KkEfXAPHci5iJl1XwR5b5rrheVSP_B0EeofqEX4fElo" />
+<title>Abdulrahman Azzam | Astrophotography</title>
+<link rel="icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&family=Tajawal:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
+<style>
+  :root{
+    --bg:#0a0c12;
+    --bg-elev:#12151f;
+    --bg-elev-2:#181c28;
+    --text:#edeae3;
+    --text-muted:#9498a5;
+    --accent:#c97a4a;
+    --accent-soft:#c97a4a33;
+    --accent-2:#4a7c8c;
+    --line:rgba(237,234,227,0.09);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Tajawal',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  #stars{position:fixed; inset:0; z-index:0; pointer-events:none;}
+  .star{position:absolute; width:2px; height:2px; border-radius:50%; background:#edeae3; opacity:.4; animation:twinkle 4s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.15;} 50%{opacity:.85;}}
+
+  a{color:inherit; text-decoration:none;}
+
+  /* ===== Header ===== */
+  header{
+    position:relative; z-index:2;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 6vw;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{height:44px; width:auto; display:block;}
+  nav{display:flex; gap:28px; font-size:.95rem; color:var(--text-muted);}
+  nav a:hover{color:var(--text);}
+
+  /* ===== Hero ===== */
+  .hero{position:relative; z-index:2; padding:14vh 6vw 8vh; padding-right:9vw; max-width:880px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; color:var(--accent-2); font-size:.85rem;
+    letter-spacing:2px; display:flex; align-items:center; gap:10px; margin-bottom:26px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--accent-2);}
+  .hero h1{
+    font-family:'Reem Kufi',sans-serif; font-weight:700; font-size:clamp(2rem, 4.6vw, 3.4rem);
+    line-height:1.55; margin-bottom:26px;
+  }
+  .hero h1 em{font-style:normal; color:var(--accent);}
+  .hero p{color:var(--text-muted); font-size:1.05rem; line-height:1.9; max-width:560px;}
+
+  .gear-strip{display:flex; flex-wrap:wrap; gap:10px; margin-top:36px;}
+  .gear-chip{
+    font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--text-muted);
+    border:1px solid var(--line); padding:7px 14px; border-radius:100px;
+  }
+
+  /* ===== Filter ===== */
+  .filter-bar{position:relative; z-index:2; padding:0 6vw 40px; display:flex; gap:10px; flex-wrap:wrap;}
+  .filter-btn{
+    font-family:'Tajawal',sans-serif; font-weight:500; font-size:.92rem; padding:9px 20px;
+    border-radius:100px; border:1px solid var(--line); background:transparent; color:var(--text-muted);
+    cursor:pointer; transition:all .25s ease;
+  }
+  .filter-btn:hover{color:var(--text); border-color:var(--accent-soft);}
+  .filter-btn.active{background:var(--accent); border-color:var(--accent); color:#13110d;}
+
+  /* ===== Gallery ===== */
+  .gallery{
+    position:relative; z-index:2; padding:0 6vw 12vh;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(290px,1fr)); gap:22px;
+  }
+  .card{
+    position:relative; background:var(--bg-elev); border:1px solid var(--line); border-radius:6px;
+    overflow:hidden; aspect-ratio:4/5; cursor:pointer;
+    opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;
+  }
+  .card.visible{opacity:1; transform:translateY(0);}
+  .card img, .placeholder-art{width:100%; height:100%; object-fit:cover; display:block;}
+  .placeholder-art{
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;
+    font-family:'IBM Plex Mono',monospace; font-size:.75rem; color:var(--text-muted);
+    background:
+      radial-gradient(ellipse at 30% 20%, #1c2236 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 70%, #20283a 0%, transparent 50%),
+      linear-gradient(160deg, #0d0f17, #161a26 60%, #0d0f17);
+  }
+
+  .locked{position:relative;}
+  .locked img{filter:blur(14px) brightness(.55) saturate(1.1);}
+  .locked-badge{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:8px; z-index:2;
+  }
+  .locked-badge .soon{
+    font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:3px; color:var(--accent);
+    border:1px solid var(--accent); padding:6px 16px; border-radius:100px; background:rgba(10,12,18,.55);
+  }
+  .locked-badge .lname{font-family:'Reem Kufi',sans-serif; font-size:1rem; color:var(--text); text-align:center; padding:0 14px;}
+
+  .frame-corner{position:absolute; width:18px; height:18px; border-color:var(--accent); opacity:0; transition:opacity .3s ease;}
+  .card:hover .frame-corner{opacity:.9;}
+  .fc-tl{top:10px; right:10px; border-top:2px solid; border-right:2px solid;}
+  .fc-tr{top:10px; left:10px; border-top:2px solid; border-left:2px solid;}
+  .fc-bl{bottom:10px; right:10px; border-bottom:2px solid; border-right:2px solid;}
+  .fc-br{bottom:10px; left:10px; border-bottom:2px solid; border-left:2px solid;}
+
+  .readout{
+    position:absolute; right:0; bottom:0; left:0;
+    background:linear-gradient(0deg, rgba(10,12,18,.95) 35%, transparent 100%);
+    padding:18px 16px 14px; transform:translateY(100%); transition:transform .35s ease;
+  }
+  .card:hover .readout, .card.locked .readout{transform:translateY(0);}
+  .readout .target{font-family:'Reem Kufi',sans-serif; font-size:1.02rem; margin-bottom:6px;}
+
+  .cat-tag{
+    position:absolute; top:12px; left:12px; font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+    color:var(--text-muted); background:rgba(10,12,18,.6); padding:4px 10px; border-radius:100px; border:1px solid var(--line); z-index:2;
+  }
+
+  .like-btn{
+    position:absolute; top:10px; right:10px; z-index:3;
+    display:flex; align-items:center; gap:6px;
+    background:rgba(10,12,18,.6); border:1px solid var(--line); border-radius:100px;
+    padding:6px 10px; font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--text-muted);
+    cursor:pointer; transition:border-color .2s ease, color .2s ease;
+  }
+  .like-btn:hover{border-color:var(--accent-soft);}
+  .like-btn.liked{color:var(--accent); border-color:var(--accent);}
+  .like-btn svg{width:13px; height:13px;}
+
+  /* ===== Lightbox ===== */
+  .lightbox{position:fixed; inset:0; z-index:50; background:rgba(7,8,12,.96); display:none; overflow-y:auto; padding:5vh 5vw;}
+  .lightbox.open{display:block;}
+  .lightbox-inner{max-width:900px; width:100%; margin:0 auto; text-align:center;}
+  .lightbox img, .lightbox .placeholder-art{
+    max-height:64vh; width:auto; max-width:100%; margin:0 auto; border-radius:4px; object-fit:contain;
+  }
+  .lightbox .placeholder-art{height:44vh; width:70vh; max-width:90vw;}
+  .lightbox-caption{margin-top:18px; font-family:'Reem Kufi',sans-serif; font-size:1.2rem;}
+  .lightbox-info{
+    margin-top:10px; color:var(--text-muted); font-size:.92rem; line-height:1.8;
+    max-width:620px; margin-left:auto; margin-right:auto;
+  }
+  .lightbox-close{
+    position:fixed; top:24px; left:24px; z-index:51;
+    font-family:'IBM Plex Mono',monospace; color:var(--text-muted); cursor:pointer; font-size:.9rem;
+    border:1px solid var(--line); padding:8px 16px; border-radius:100px; background:var(--bg);
+  }
+  .lightbox-close:hover{color:var(--text); border-color:var(--accent-soft);}
+
+  .lightbox-actions{display:flex; justify-content:center; margin-top:20px;}
+  .lightbox-like{
+    display:flex; align-items:center; gap:8px; background:transparent; border:1px solid var(--line);
+    border-radius:100px; padding:10px 20px; font-family:'IBM Plex Mono',monospace; font-size:.8rem;
+    color:var(--text-muted); cursor:pointer;
+  }
+  .lightbox-like.liked{color:var(--accent); border-color:var(--accent);}
+  .lightbox-like svg{width:16px; height:16px;}
+
+  .comments-wrap{max-width:620px; margin:44px auto 0; text-align:right; border-top:1px solid var(--line); padding-top:28px;}
+  .comments-wrap h3{font-family:'Reem Kufi',sans-serif; font-size:1rem; margin-bottom:14px; color:var(--text-muted);}
+
+  /* ===== Footer ===== */
+  footer{
+    position:relative; z-index:2; border-top:1px solid var(--line); padding:40px 6vw;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; align-items:center;
+  }
+  .footer-copy{font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--text-muted);}
+  .social-links{display:flex; gap:14px;}
+  .social-links a{
+    width:40px; height:40px; border:1px solid var(--line); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; transition:border-color .2s ease, transform .2s ease;
+  }
+  .social-links a:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .social-links svg{width:18px; height:18px; fill:var(--text-muted);}
+  .social-links a:hover svg{fill:var(--accent);}
+
+  @media (max-width:640px){
+    header{padding:14px 5vw;}
+    .brand img{height:34px;}
+    nav{gap:16px; font-size:.85rem;}
+    .gallery{grid-template-columns:1fr 1fr; gap:12px;}
+    .hero{padding:10vh 6vw 6vh; padding-right:8vw;}
+    .hero h1{font-size:clamp(1.7rem, 7vw, 2.4rem); line-height:1.5;}
+  }
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<header>
+  <a class="brand" href="#">
+    <img src="images/logo.png" alt="Abdulrahman Azzam Astrophotography">
+  </a>
+  <nav>
+    <a href="#gallery">المعرض</a>
+    <a href="#footer">تواصل</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">رصد ليلي — تصوير فلكي هاوٍ</div>
+  <h1>أرصد السماء من تحت سماء <em>مصر</em> المفتوحة</h1>
+  <p>أستكشف أسرار الكون من قلب مصر عبر عدستي، موثقًا السدم والمجرات في صور فنية تعكس جمال السماء الليلية وهيبتها.</p>
+  <div class="gear-strip">
+    <div class="gear-chip">Star Adventurer 2i</div>
+    <div class="gear-chip">Canon EF 70-300mm USM II</div>
+    <div class="gear-chip">Canon EF 50mm STM</div>
+    <div class="gear-chip">Benro Tripod</div>
+  </div>
+</section>
+
+<div class="filter-bar" id="filterBar"></div>
+<section class="gallery" id="gallery"></section>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-close" id="lightboxClose">إغلاق ✕</div>
+  <div class="lightbox-inner" id="lightboxInner"></div>
+</div>
+
+<footer id="footer">
+  <div class="footer-copy">© <span id="year"></span> Abdulrahman Azzam</div>
+  <div class="social-links">
+    <a href="https://www.instagram.com/abdulrahman_azzam14?igsh=MWZpaHU1bG4zcjhkeg==" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2c2.7 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.15.55.55.9 1.11 1.15 1.77.25.64.42 1.37.47 2.43.05 1.06.06 1.42.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.42.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.7 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.15-1.77A4.9 4.9 0 0 1 5.45 2.53c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.3 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.2-8.4a1.17 1.17 0 1 1 0-2.34 1.17 1.17 0 0 1 0 2.34z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/share/1DAJriye8F/?mibextid=wwXIfr" id="facebookLink" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M13.5 22v-8.4h2.8l.4-3.3h-3.2V8.1c0-.96.27-1.6 1.65-1.6H17V3.5c-.3-.04-1.3-.13-2.46-.13-2.44 0-4.1 1.49-4.1 4.22v2.35H8v3.3h2.44V22h3.06z"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+/* ======================================================
+   بيانات المعرض — كل صورة عبارة عن كائن واحد بالمعلومات التالية:
+   src: مسار الصورة (فاضي = "قريبًا")، target: اسم الهدف
+   category: التصنيف، lens: العدسة، info: معلومة عن الجرم السماوي
+   locked: true لعرض شارة "قريبًا" بدل الصورة
+   ====================================================== */
+const photos = [
+  {
+    slug: "horsehead-flame",
+    src: "images/horsehead-flame.jpg",
+    target: "سديم رأس الحصان والشعلة",
+    category: "سدم ومجرات",
+    lens: "EF 70-300mm",
+    info: "سديم رأس الحصان سحابة غبار داكنة تتوضّح أمام سديم مضيء خلفها، بينما سديم الشعلة يضيء بفعل نجم آلنيتاك القريب منه. كلاهما في كوكبة الجبار ويبعدان نحو 1500 سنة ضوئية."
+  },
+  {
+    slug: "orion-nebula",
+    src: "images/orion-nebula.jpg",
+    target: "سديم الجبار (M42)",
+    category: "سدم ومجرات",
+    lens: "EF 70-300mm",
+    info: "من أسطع السدم في سمائنا، ويمكن تمييزه بالعين المجردة كبقعة ضبابية أسفل حزام الجبار. يبعد نحو 1344 سنة ضوئية، وهو مصنع كوني تتشكّل بداخله نجوم جديدة."
+  },
+  {
+    slug: "pleiades",
+    src: "images/pleiades.jpg",
+    target: "عنقود الثريا (M45)",
+    category: "سدم ومجرات",
+    lens: "EF 70-300mm",
+    info: "تجمّع نجمي مفتوح تحيط بنجومه الساخنة سحابة انعكاسية زرقاء اللون، يبعد نحو 444 سنة ضوئية، ويُعرف أيضًا باسم 'السبع الشقيقات'."
+  },
+  {
+    slug: "lagoon-trifid",
+    src: "images/lagoon-trifid.jpg",
+    target: "سديما البحيرة والثلاثي",
+    category: "سدم ومجرات",
+    lens: "EF 70-300mm",
+    info: "سديم البحيرة (M8) الوردي المتوهج، وسديم الثلاثي (M20) بفصوصه وألوانه الزرقاء والوردية، يظهران معًا في هذا الكادر ضمن كوكبة القوس."
+  },
+  {
+    slug: "andromeda-1",
+    src: "",
+    locked: true,
+    target: "مجرة المرأة المسلسلة (أندروميدا) — تقريب",
+    category: "سدم ومجرات",
+    lens: "EF 70-300mm",
+    info: "أقرب مجرة حلزونية كبيرة إلى مجرتنا، تبعد نحو 2.5 مليون سنة ضوئية وتحوي ما يقارب تريليون نجم."
+  },
+  {
+    slug: "andromeda-2",
+    src: "images/andromeda-2.jpg",
+    target: "مجرة المرأة المسلسلة (أندروميدا) — مجال أوسع",
+    category: "سدم ومجرات",
+    lens: "EF 70-300mm",
+    info: "نفس المجرة (M31) بمجال رؤية أوسع يُظهر مجرتيها القزمتين المرافقتين M32 وM110."
+  },
+  {
+    slug: "galaxy-arm",
+    src: "images/galaxy-arm.jpg",
+    target: "ذراع مجرة درب التبانة",
+    category: "سماء واسعة",
+    lens: "EF 50mm STM",
+    info: "لقطة واسعة المجال لأحد أذرع مجرتنا، حيث تتكدّس غيوم الغبار والغاز والنجوم الكثيفة قرب مركز المجرة."
+  },
+  {
+    slug: "rho-cloud",
+    src: "",
+    locked: true,
+    target: "سحابة رو أوفيتشي (Rho Ophiuchi)",
+    category: "سماء واسعة",
+    lens: "EF 50mm STM",
+    info: "من أكثر مناطق السماء تلونًا، مزيج نادر من سدم انعكاسية زرقاء وانبعاثية صفراء وممرات غبار داكنة."
+  },
+  {
+    slug: "moon-1",
+    src: "images/moon-1.jpg",
+    target: "القمر",
+    category: "النظام الشمسي",
+    lens: "EF 70-300mm",
+    info: "قمر الأرض، الجرم الوحيد الذي وطأته قدم الإنسان، يبعد عنا في المتوسط نحو 384 ألف كيلومتر."
+  },
+  {
+    slug: "moon-2",
+    src: "images/moon-2.jpg",
+    target: "أطوار القمر",
+    category: "النظام الشمسي",
+    lens: "EF 70-300mm",
+    info: "صورة مجمّعة تُظهر عدة أطوار للقمر خلال دورته الشهرية حول الأرض، وتنتج هذه الأطوار عن التغيّر المستمر في زاوية سقوط ضوء الشمس على القمر كما نراه من الأرض."
+  },
+  {
+    slug: "moon-3",
+    src: "images/moon-3.jpg",
+    target: "خسوف القمر",
+    category: "النظام الشمسي",
+    lens: "EF 70-300mm",
+    info: "يحدث خسوف القمر عندما تحجب الأرض ضوء الشمس عنه، فيكتسب لونه الأحمر النحاسي المعروف بـ'القمر الدموي'."
+  },
+  {
+    slug: "sun",
+    src: "images/sun.jpg",
+    target: "الشمس",
+    category: "النظام الشمسي",
+    lens: "EF 70-300mm + فلتر شمسي",
+    info: "نجمنا الأقرب، وتظهر في الصورة بعض البقع الشمسية على سطحها المضيء. يُشترط استخدام فلتر شمسي مخصص عند تصويرها مباشرة لحماية العين والمستشعر."
+  }
+];
+
+/* ======================================================
+   إعداد اللايك (CounterAPI) والتعليقات (Disqus)
+   عبدالرحمن: غيّر القيمتين دول بعد ما تعمل حساب مجاني:
+   - COUNTER_WORKSPACE: من counterapi.dev (تسجيل مجاني، دقيقة واحدة)
+   - DISQUS_SHORTNAME: من disqus.com (تسجيل مجاني)
+   ====================================================== */
+const COUNTER_WORKSPACE = "abdulrahmanazzam14s-team-4664"; // اسم الـ workspace الحقيقي بتاع عبدالرحمن
+const COUNTER_ACCESS_TOKEN = "ut_duhUIwp1HzamTUyzRiHYabMGrdh1BW7QukMDPqbw"; // توكن CounterAPI بتاع عبدالرحمن
+const DISQUS_SHORTNAME = "abdulrahman-astro";  // TODO: غيّرها لـ shortname بتاعك
+
+const counterClient = new Counter({
+  workspace: COUNTER_WORKSPACE,
+  accessToken: COUNTER_ACCESS_TOKEN
+});
+
+const categories = ["الكل", ...new Set(photos.map(p => p.category))];
+
+// النجوم في الخلفية
+const starsWrap = document.getElementById('stars');
+for(let i=0;i<70;i++){
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.top = Math.random()*100+'vh';
+  s.style.right = Math.random()*100+'vw';
+  s.style.animationDelay = (Math.random()*4)+'s';
+  s.style.opacity = (Math.random()*0.6+0.2).toFixed(2);
+  starsWrap.appendChild(s);
+}
+
+const heartIcon = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.2-4.5-9.7-9C.6 8.4 2 5 5.4 5c1.9 0 3.3 1 4.6 2.7C11.3 6 12.7 5 14.6 5 18 5 19.4 8.4 21.7 12c-2.5 4.5-9.7 9-9.7 9z"/></svg>`;
+
+// أزرار الفلترة
+const filterBar = document.getElementById('filterBar');
+categories.forEach((cat,i)=>{
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (i===0 ? ' active' : '');
+  btn.textContent = cat;
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGallery(cat);
+  });
+  filterBar.appendChild(btn);
+});
+
+let sessionLiked = {}; // يمنع تكرار اللايك في نفس الجلسة فقط (بدون تخزين دائم)
+
+// يجيب العدد الحالي للايكات من غير ما يزوّدها (بيتنادى أول ما تفتح الصفحة)
+async function fetchLikeCount(slug){
+  try{
+    const result = await counterClient.get(slug);
+    return result.value ?? 0;
+  }catch(e){ console.log('fetch count error', e); return 0; }
+}
+
+// يزوّد اللايك بواحد ويرجع العدد الجديد
+async function sendLike(slug){
+  if(sessionLiked[slug]) return null;
+  sessionLiked[slug] = true;
+  try{
+    const result = await counterClient.up(slug);
+    return result.value ?? null;
+  }catch(e){ console.log('like error', e); return null; }
+}
+
+const gallery = document.getElementById('gallery');
+function buildCard(p){
+  const card = document.createElement('div');
+  card.className = 'card' + (p.locked ? ' locked' : '');
+
+  const media = p.src
+    ? `<img src="${p.src}" alt="${p.target}">`
+    : `<div class="placeholder-art">قريبًا<br>(${p.target})</div>`;
+
+  card.innerHTML = `
+    ${media}
+    <div class="cat-tag">${p.category}</div>
+    <button class="like-btn" data-slug="${p.slug}">${heartIcon}<span class="like-count">--</span></button>
+    <span class="frame-corner fc-tl"></span>
+    <span class="frame-corner fc-tr"></span>
+    <span class="frame-corner fc-bl"></span>
+    <span class="frame-corner fc-br"></span>
+    ${p.locked ? `<div class="locked-badge"><div class="lname">${p.target}</div><div class="soon">SOON</div></div>` : `
+    <div class="readout">
+      <div class="target">${p.target}</div>
+    </div>`}
+  `;
+
+  const likeBtn = card.querySelector('.like-btn');
+  const likeCountEl = likeBtn.querySelector('.like-count');
+
+  if(!p.locked){
+    fetchLikeCount(p.slug).then(count => { likeCountEl.textContent = count; });
+  }
+
+  likeBtn.addEventListener('click', async (e)=>{
+    e.stopPropagation();
+    likeBtn.classList.add('liked');
+    const newCount = await sendLike(p.slug);
+    if(newCount !== null) likeCountEl.textContent = newCount;
+  });
+
+  if(!p.locked){
+    card.addEventListener('click', ()=> openLightbox(p));
+  }
+  return card;
+}
+
+function renderGallery(filter){
+  gallery.innerHTML = '';
+  const list = (!filter || filter === "الكل") ? photos : photos.filter(p=>p.category===filter);
+  list.forEach(p=> gallery.appendChild(buildCard(p)));
+  observeCards();
+}
+renderGallery("الكل");
+
+function observeCards(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, {threshold:.15});
+  document.querySelectorAll('.card').forEach(c=>obs.observe(c));
+}
+
+// لايت بوكس + تعليقات Disqus لكل صورة
+const lightbox = document.getElementById('lightbox');
+const lightboxInner = document.getElementById('lightboxInner');
+
+function openLightbox(p){
+  lightboxInner.innerHTML = `
+    <img src="${p.src}" alt="${p.target}">
+    <div class="lightbox-caption">${p.target}</div>
+    <div class="lightbox-info">${p.info}</div>
+    <div class="lightbox-actions">
+      <button class="lightbox-like" id="lbLike">${heartIcon}<span id="lbLikeCount">--</span></button>
+    </div>
+    <div class="comments-wrap">
+      <h3>التعليقات</h3>
+      <div id="disqus_thread"></div>
+    </div>
+  `;
+  const lbLikeCount = document.getElementById('lbLikeCount');
+  fetchLikeCount(p.slug).then(count => { lbLikeCount.textContent = count; });
+
+  document.getElementById('lbLike').addEventListener('click', async function(){
+    this.classList.add('liked');
+    const newCount = await sendLike(p.slug);
+    if(newCount !== null) lbLikeCount.textContent = newCount;
+  });
+  lightbox.classList.add('open');
+  loadDisqus(p);
+}
+
+function loadDisqus(p){
+  const pageUrl = window.location.href.split('#')[0] + '#' + p.slug;
+  const pageId = p.slug;
+  if(window.DISQUS){
+    window.DISQUS.reset({
+      reload:true,
+      config:function(){
+        this.page.url = pageUrl;
+        this.page.identifier = pageId;
+        this.page.title = p.target;
+      }
+    });
+  } else {
+    window.disqus_config = function(){
+      this.page.url = pageUrl;
+      this.page.identifier = pageId;
+      this.page.title = p.target;
+    };
+    const d = document.createElement('script');
+    d.src = `https://${DISQUS_SHORTNAME}.disqus.com/embed.js`;
+    d.setAttribute('data-timestamp', +new Date());
+    document.body.appendChild(d);
+  }
+}
+
+document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('open'));
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
